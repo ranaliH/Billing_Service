@@ -83,7 +83,7 @@ public class billingModel {
 		 } 
 		 catch (Exception e) 
 		 { 
-		 output = "Error while reading the items."; 
+		 output = "Error while reading the reg_cus_bills."; 
 		 System.err.println(e.getMessage()); 
 		 } 
 		 return output; 
@@ -144,18 +144,18 @@ public class billingModel {
 		 }
 		 
 		 // create a prepared statement
-		 String query = "UPDATE reg_cus_billing SET invoiceNo=?,  date=?, cusName=?, accNo=?, noOfUnits=?, unitPrice=?, tax=?, totalAmount=?"; 
+		 String query = "UPDATE reg_cus_billing SET   date=?, cusName=?, accNo=?, noOfUnits=?, unitPrice=?, tax=?, totalAmount=? WHERE invoiceNo=?"; 
 		 PreparedStatement preparedStmt = con.prepareStatement(query); 
 		
 		 // binding values
-		 preparedStmt.setInt(1, 0); 
-		 preparedStmt.setString(2, date); 
-		 preparedStmt.setString(3, cusName); 
-		 preparedStmt.setString(4, accNo);
-		 preparedStmt.setString(5, noOfUnits); 
-		 preparedStmt.setDouble(6, Double.parseDouble(unitPrice)); 
-		 preparedStmt.setDouble(7, Double.parseDouble(tax));
-		 preparedStmt.setDouble(8, Double.parseDouble(totalAmount));
+		 preparedStmt.setString(1, date); 
+		 preparedStmt.setString(2, cusName); 
+		 preparedStmt.setString(3, accNo);
+		 preparedStmt.setString(4, noOfUnits); 
+		 preparedStmt.setDouble(5, Double.parseDouble(unitPrice)); 
+		 preparedStmt.setDouble(6, Double.parseDouble(tax));
+		 preparedStmt.setDouble(7, Double.parseDouble(totalAmount));
+		 preparedStmt.setInt(8, Integer.parseInt(invoiceNo));
 		
 		 // execute the statement
 		 preparedStmt.execute(); 
