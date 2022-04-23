@@ -91,7 +91,7 @@ public class billingModel {
 	 
 	 
 	 //insert bills to the DB
-	 public String insertBill(Date date, String cusName, String accNo, String noOfUnits, String unitPrice, String tax, String totalAmount)
+	 public String insertBill(java.sql.Date date, String cusName, String accNo, String noOfUnits, String unitPrice, String tax, String totalAmount)
 	 { 
 			 String output = ""; 
 			 try
@@ -109,7 +109,8 @@ public class billingModel {
 			 
 			 // binding values
 			 preparedStmt.setInt(1, 0); 
-			 preparedStmt.setDate(2, date); 
+			 java.sql.Date sqlDate = new java.sql.Date(new java.util.Date().getTime());
+			 preparedStmt.setDate(2, sqlDate);
 			 preparedStmt.setString(3, cusName); 
 			 preparedStmt.setString(4, accNo);
 			 preparedStmt.setString(5, noOfUnits); 

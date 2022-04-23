@@ -42,6 +42,13 @@ public class billingService {
 			 @FormParam("tax") String tax,
 			 @FormParam("totalAmount") String totalAmount)
 	{ 
+		
+		//validation for the insert query
+				if(cusName.isEmpty()||accNo.isEmpty()||noOfUnits.isEmpty()||unitPrice.isEmpty()||tax.isEmpty()) 
+				 {
+					 return "input fields cannot be empty";
+				 }	
+				
 	 String output = billingObj.insertBill(date, cusName, accNo, noOfUnits, unitPrice, tax, totalAmount); 
 	 return output; 
 	}
@@ -65,6 +72,13 @@ public class billingService {
 	 String unitPrice = billObject.get("unitPrice").getAsString(); 
 	 String tax = billObject.get("tax").getAsString(); 
 	 String totalAmount = billObject.get("totalAmount").getAsString(); 
+	 
+	//validation for the update query
+		 if(date == null||cusName.isEmpty()||accNo.isEmpty()||noOfUnits.isEmpty()||unitPrice.isEmpty()||tax.isEmpty()) 
+		 {
+			 return "input fields cannot be empty";
+		 }
+	 
 	 String output = billingObj.updateBill(invoiceNo, date, cusName, accNo, noOfUnits, unitPrice, tax, totalAmount); 
 	return output; 
 	}
