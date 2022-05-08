@@ -28,6 +28,13 @@ public class billingService {
 	 return billingObj.readBills(); 
 	 } 
 	
+	@GET
+	@Path("/readBills/{invoiceNo}") 
+	@Produces(MediaType.TEXT_PLAIN) 
+	public String readBill(@PathParam("invoiceNo") String invoiceNo) 
+	 { 
+	 return billingObj.readBills(); 
+	 } 
 	
 	//insert
 	@POST
@@ -100,5 +107,13 @@ public class billingService {
 		 
 		return output; 
 	}
+	
+	//inter service communication
+//	@GET
+//	@Path("/ReadAll/{cusID}")
+//	@Produces(MediaType.TEXT_PLAIN)
+//	public String readAll(@PathParam("cusID")int cusID){
+//		return billingObj.readAllCusDetails(cusID);
+//	}
 	
 }

@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.*; 
+//import com.sun.jersey.api.client.*;
 
 public class billingModel {
 
@@ -69,12 +70,69 @@ public class billingModel {
 		 output += "<td>" + tax + "</td>"; 
 		 output += "<td>" + totalAmount + "</td>"; 
 	 
-		 // buttons
-		 output += "<td><input name='btnUpdate' type='button' value='Update' class='btn btn-secondary'></td>"
-		 + "<td><form method='post' action='items.jsp'>"
-		 + "<input name='btnRemove' type='submit' value='Remove' class='btn btn-danger'>"
-		 + "<input name='itemID' type='hidden' value='" + invoiceNo 
-		 + "'>" + "</form></td></tr>"; 
+		 } 
+		 con.close(); 
+	 
+		 // Complete the html table
+		 output += "</table>"; 
+		 } 
+		 catch (Exception e) 
+		 { 
+		 output = "Error while reading the reg_cus_bills."; 
+		 System.err.println(e.getMessage()); 
+		 } 
+		 return output; 
+	 } 
+	 
+	 
+	 public String readBill(String No) 
+	 { 
+		 String output = ""; 
+		 try
+		 { 
+		 Connection con = connect(); 
+		 if (con == null) 
+		 {
+			 return "Error while connecting to the database for reading."; 
+		 } 
+		 
+		 // Prepare the html table to be displayed
+		 output = "<table border='1'><tr><th>Invoice No</th>"+
+		 "<th>Date</th>" +
+		 "<th>Customer Name</th>" + 
+		 "<th>Account No</th>" +
+		 "<th>Units</th>"+
+		 "<th>Unit Price</th>"+
+		 "<th>Tax</th>"+
+		 "<th>Total Amount</th></tr>"; 
+		 
+		 String query = "select * from reg_cus_billing where invoiceNo =?"; 
+		 PreparedStatement preparedStmt = con.prepareStatement(query);
+		 preparedStmt.setString(1, No);
+		 ResultSet rs = preparedStmt.executeQuery();
+	 
+		 // iterate through the rows in the result set
+		 while (rs.next()) 
+		 { 
+		 String invoiceNo = Integer.toString(rs.getInt("invoiceNo")); 
+		 String date = rs.getString("date");
+		 String cusName = rs.getString("cusName"); 
+		 String accNo = Integer.toString(rs.getInt("accNo"));
+		 String noOfUnits = Integer.toString(rs.getInt("noOfUnits")); 
+		 String unitPrice = Double.toString(rs.getDouble("unitPrice")); 
+		 String tax = Double.toString(rs.getDouble("tax")); 
+		 String totalAmount = Double.toString(rs.getDouble("totalAmount")); 
+	 
+		 // Add into the html table
+		 output += "<tr><td>" + invoiceNo + "</td>"; 
+		 output += "<td>" + date + "</td>"; 
+		 output += "<td>" + cusName + "</td>"; 
+		 output += "<td>" + accNo + "</td>"; 
+		 output += "<td>" + noOfUnits + "</td>"; 
+		 output += "<td>" + unitPrice + "</td>"; 
+		 output += "<td>" + tax + "</td>"; 
+		 output += "<td>" + totalAmount + "</td>"; 
+	 
 		 } 
 		 con.close(); 
 	 
@@ -204,5 +262,13 @@ public class billingModel {
 			 return output; 
 		}
 	 
+		//inter service communicaion
+//		public String readAllCusDetails(int cusId){
+//			Client c = Client.create();
+//			WebResource resource = c.resource("http://localhost:8095/BillingService/billingService/bills/readBills");
+//			String output = resource.get(String.class);
+//			
+//			return output;
+//		}
 	 
 }
