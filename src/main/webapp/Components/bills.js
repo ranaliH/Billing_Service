@@ -15,7 +15,7 @@ $(document).on("click", "#btnSave", function(event) {
 	$("#alertError").text("");
 	$("#alertError").hide();
 	// Form validation-------------------
-	var status = validateItemForm();
+	var status = validateBillForm();
 	if (status != true) {
 		$("#alertError").text(status);
 		$("#alertError").show();
@@ -105,7 +105,7 @@ function onBillDeleteComplete(response, status) {
 	}
 }
 // CLIENT-MODEL================================================================
-function validateItemForm() {
+function validateBillForm() {
 	// Customer Name
 	if ($("#cusName").val().trim() == "") {
 		return "Insert Item Customer Name.";
