@@ -1,7 +1,6 @@
 package com;
 
 import java.sql.*; 
-//import com.sun.jersey.api.client.*;
 
 public class Bills {
 
